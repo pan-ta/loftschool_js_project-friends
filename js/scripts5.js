@@ -1,3 +1,5 @@
+// для комментариев:) 
+
 const popup = document.querySelector("#popup");
 const openPopup = document.querySelector("#open-popup");
 const closePopup = document.querySelector("#close-popup");
