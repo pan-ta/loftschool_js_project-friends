@@ -1,0 +1,38 @@
+
+.friend {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    height: 60px;
+    width: 100%;
+    padding: 5px;
+
+    border-bottom: 1px;
+    border-color: $light-gray;
+
+    &:hover {
+        background: $light-gray;
+    }
+
+}
+
+.friend-photo {
+    background-image: url("http://f3.mylove.ru/FOkTVjRH69.png");
+    background-size: cover; 
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+
+    margin-right: 8px;
+}
+
+.friend-name {
+    width: 200px;
+
+    @include phones {
+        width: 25vw;
+
+    }
+}

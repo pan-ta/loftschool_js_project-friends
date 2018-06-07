@@ -1,0 +1,25 @@
+//resolutions
+$tablets: 925px;
+$phones: 480px;
+
+@import "layout/media.scss";
+
+// config
+@import "config/mixins.scss";
+@import "config/variables.scss";
+@import "config/func.scss";
+
+// layout
+
+@import "layout/base.scss";
+@import "layout/ajustments.scss";
+@import "layout/fonts.scss";
+
+
+//sections
+
+@import "sections/common.scss";
+@import "sections/mainpage.scss";
+@import "sections/popup.scss";
+@import "sections/friend.scss";
+@import "sections/icons.scss";

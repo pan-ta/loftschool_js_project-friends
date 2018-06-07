@@ -1,0 +1,17 @@
+data [
+    {
+        name: "Pasha",
+        lastName: "Simeshenko";
+        photo: "http://cft2.mobimag.ru/Articles/11/2367/Image00001.jpg"
+    },
+    {
+        name: "Misha",
+        lastName: "Los";
+        photo: "http://poradum.com/wp-content/uploads/2016/05/5093ed5387a1c42c56bbea32969fd854.jpg"
+    },
+    {
+        name: "Vadim",
+        lastName: "Cipa-Cipa";
+        photo: "http://conoto.ru/media/image/2016/11/78c4d3ad-8dbd-4af8-89b5-834d8e6c12c9.jpg"
+    },
+]
