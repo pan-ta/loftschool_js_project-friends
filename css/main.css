@@ -1,0 +1,331 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.42;
+  color: #4f4f4f;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+  @media screen and (max-width: 925px) {
+    html, body {
+      font-size: 14px; } }
+  @media screen and (max-width: 480px) {
+    html, body {
+      font-size: 12px; } }
+
+body {
+  position: relative; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  font-weight: normal; }
+
+p {
+  margin: 0;
+  padding: 0; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+ul {
+  margin: 0;
+  padding: 0; }
+  ul li {
+    list-style: none; }
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+button {
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer; }
+  button:focus {
+    outline: none;
+    border: none; }
+
+@font-face {
+  font-family: 'Gagalin';
+  src: url("../fonts/gagalin-regular-webfont.woff2") format("woff2"), url("../fonts/gagalin-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Lifehack';
+  src: url("../fonts/lifehack_medium-webfont.woff2") format("woff2"), url("../fonts/lifehack_medium-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; }
+
+.button {
+  height: 30px;
+  border-radius: 8px;
+  padding: 3px 15px 2px 15px;
+  font-family: 'Fira Sans', sans-serif;
+  -webkit-transition: 300ms;
+  -o-transition: 300ms;
+  transition: 300ms; }
+
+.main-page {
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+
+.main-page__title {
+  font-family: 'Pacifico', cursive;
+  font-size: 25px;
+  color: #ff8663;
+  margin-bottom: 10px; }
+
+.main-page__desc {
+  font-size: 18px;
+  font-weight: 300;
+  margin-bottom: 28px;
+  text-align: center; }
+
+.main-page__btn {
+  background: #c4c4c4; }
+  .main-page__btn:hover {
+    background: #ff8663; }
+
+.popup {
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none; }
+
+.popup__bg {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4); }
+  @media screen and (max-width: 480px) {
+    .popup__bg {
+      width: 25vw;
+      background: #fff; } }
+
+.popup__container {
+  width: 625px;
+  height: 490px;
+  background: #f0f0f0;
+  z-index: 10;
+  border-radius: 8px; }
+  @media screen and (max-width: 480px) {
+    .popup__container {
+      width: 100vw;
+      height: 100vh; } }
+
+.popup__header {
+  width: 100%;
+  height: 53px;
+  border-radius: 8px;
+  background: #ff8663;
+  margin-bottom: -8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 11px 15px 11px 15px; }
+
+.popup__title {
+  font-size: 18px;
+  color: #fff;
+  margin-top: 10px; }
+
+.popup__close {
+  color: #fff;
+  text-decoration: none; }
+
+.popup__input {
+  background: #f0f0f0;
+  width: 100%;
+  height: 45px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: distribute;
+  justify-content: space-around; }
+
+.input {
+  border: none;
+  outline: none;
+  background: #fff;
+  width: 285px;
+  height: 27px;
+  border-radius: 8px;
+  padding: 3px 15px 2px 15px;
+  font-family: 'Fira Sans', sans-serif;
+  font-size: 14px;
+  -webkit-transition: 300ms;
+  -o-transition: 300ms;
+  transition: 300ms; }
+  .input:focus {
+    border: 1px solid #c4c4c4; }
+  @media screen and (max-width: 480px) {
+    .input {
+      width: 45vw;
+      font-size: 11px; } }
+
+.popup__friends {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+
+.popup__all-friends, .popup__choosen-friends {
+  width: 312px;
+  height: 357px;
+  background: #fff;
+  padding: 12px 15px 2px 15px; }
+  @media screen and (max-width: 480px) {
+    .popup__all-friends, .popup__choosen-friends {
+      width: 49vw;
+      height: 72vh; } }
+
+.popup__all-friends-container, .popup__choosen-friends-container {
+  height: 325px;
+  width: 293px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+  @media screen and (max-width: 480px) {
+    .popup__all-friends-container, .popup__choosen-friends-container {
+      width: 48vw;
+      height: 67vh; } }
+
+.popup__all-friends-list, .popup__choosen-friends-list {
+  width: calc(100% - 10px);
+  overflow: auto; }
+
+.popup__save {
+  height: 45px;
+  padding-right: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end; }
+
+.popup__save-btn {
+  background: #ff8663;
+  height: 28px;
+  color: #fff; }
+  .popup__save-btn:hover {
+    background: #4f4f4f; }
+
+.friend {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+  padding: 5px;
+  border-bottom: 1px;
+  border-color: #f0f0f0; }
+  .friend:hover {
+    background: #f0f0f0; }
+
+.friend-photo {
+  background-image: url("http://f3.mylove.ru/FOkTVjRH69.png");
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 8px; }
+
+.friend-name {
+  width: 200px; }
+  @media screen and (max-width: 480px) {
+    .friend-name {
+      width: 25vw; } }
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor; }
+
+.icon-plus, .icon-cross {
+  color: #c4c4c4; }
+
+/*# sourceMappingURL=main.css.map */

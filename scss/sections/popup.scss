@@ -1,0 +1,170 @@
+.popup {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    display: none;
+
+}
+
+.popup__bg {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: rgba($color: #000000, $alpha: 0.4);
+    @include phones {
+        width: 25vw;
+        background: #fff;
+    }
+    
+}
+
+.popup__container {
+    width: 625px;
+    height: 490px;
+    background: $light-gray;
+    z-index: 10;
+    border-radius: 8px;
+
+    @include phones {
+        width: 100vw;
+        height: 100vh;
+    }
+}
+
+.popup__header {
+    width: 100%;
+    height: 53px;
+    border-radius: 8px;
+    background: $orange;
+    margin-bottom: -8px;
+
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 11px 15px 11px 15px;
+
+}
+
+.popup__title {
+    font-size: 18px;
+    color: #fff;
+    margin-top: 10px;
+
+}
+
+.popup__close {
+    color: #fff;
+    text-decoration: none;
+}
+
+.popup__input {
+    background: $light-gray;
+    width: 100%;
+    height: 45px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+.input {
+    border: none;
+    outline: none;
+    background: #fff;
+    width: 285px;
+    height: 27px;
+    border-radius: 8px;
+    padding: 3px 15px 2px 15px;
+
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 14px;
+
+    transition: 300ms;
+
+    &:focus {
+        border: 1px solid $gray;
+    }
+
+    @include phones {
+        width: 45vw;
+        font-size: 11px;
+    }
+}
+
+.popup__friends {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.popup__all-friends, .popup__choosen-friends {
+    width: 312px;
+    height: 357px;
+    background: #fff;
+    padding: 12px 15px 2px 15px;
+    @include phones {
+        width: 49vw;
+        height: 72vh;
+    }
+}
+
+.popup__all-friends-container, .popup__choosen-friends-container {
+    height: 325px;
+    width: 293px;
+
+    display: flex;
+    flex-direction: row;
+    // align-items: center;
+    justify-content: space-between;
+
+    @include phones {
+        width: 48vw;
+        height: 67vh;
+    }
+}
+
+.popup__all-friends-list, .popup__choosen-friends-list {
+    width: calc(100% - 10px);
+    overflow: auto;
+}
+
+// .popup__list-control {
+//     height: 100%;
+//     width: 10px;
+//     // background: $orange;
+// }
+
+
+.popup__save {
+    height: 45px;
+    padding-right: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.popup__save-btn {
+    background: $orange;
+    height: 28px;
+    color: #fff;
+
+
+    &:hover {
+        background: $black;
+    }
+}

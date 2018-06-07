@@ -1,0 +1,10 @@
+.button {
+  height: 30px;
+  border-radius: 8px;
+  padding: 3px 15px 2px 15px;
+  font-family: 'Fira Sans', sans-serif;
+  -webkit-transition: 300ms;
+  -o-transition: 300ms;
+  transition: 300ms; }
+
+/*# sourceMappingURL=common.css.map */
