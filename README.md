@@ -1,0 +1,1 @@
+# loftschool_js_project-friends
