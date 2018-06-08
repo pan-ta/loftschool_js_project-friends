@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 
     height: 60px;
     width: 100%;
@@ -29,7 +30,7 @@
 }
 
 .friend-name {
-    width: 200px;
+    width: 150px;
 
     @include phones {
         width: 25vw;
