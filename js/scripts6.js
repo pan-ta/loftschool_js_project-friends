@@ -7,14 +7,16 @@ const allFriendsFilterInput = document.querySelector("#all-friends-input");
 const choosenFriendsFilterInput = document.querySelector("#choosen-friends-input");
 const saveBtn = document.querySelector("#save");
 
-let friendListFragment = document.createDocumentFragment();
-const emulKeyup = new Event("keyup");
-let currentDrag;
 
+let friendsData;
 let allFriendsArr = [];
 let choosenFriendsArr = [];
-
 let storage = localStorage;
+
+let friendListFragment = document.createDocumentFragment();
+let currentDrag;
+
+
 
 
 // let testData = [
@@ -67,8 +69,8 @@ let storage = localStorage;
 
 function authVK() {
     return new Promise ((resolve, reject) => {
-        VK.Auht.login(data => {
-            if(data, session) {
+        VK.Auth.login(data => {
+            if(data.session) {
                 resolve();
             } else {
                 reject(new Error("Не удалось авторизоваться"));
@@ -99,7 +101,7 @@ function createFriendItem (name, lastName, photo, id, friendsList) {
 
     const friendPhoto = document.createElement('div');
     friendPhoto.classList.add('friend-photo');
-    friendPhoto.style.backgroundImage = photo;
+    friendPhoto.style.backgroundImage = `url(${photo})`;
     friendItem.appendChild(friendPhoto);
 
     const friendName = document.createElement('div');
@@ -162,7 +164,7 @@ function defineMoveBtn (moveBtnIcon, currFriendsList, friendId, friendItem) {
 
 function filterFriendsArr (friendsArr, value) {
     const filteredFriends = friendsArr.filter(friend => {
-        const fullName = `${friend.name.toUpperCase()} ${friend.lastName.toUpperCase()}`;
+        const fullName = `${friend.first_name.toUpperCase()} ${friend.last_name.toUpperCase()}`;
         return fullName.includes(value.toUpperCase()); // возвращает true/false
     })
     return filteredFriends;
@@ -170,7 +172,7 @@ function filterFriendsArr (friendsArr, value) {
 
 function renderFriends(friendsArr, friendsList) {
     for (let friend of friendsArr) {
-        const newFriendItem = createFriendItem(friend.name, friend.lastName, friend.photo, friend.id, friendsList);
+        const newFriendItem = createFriendItem(friend.first_name, friend.last_name, friend.photo_100, friend.id, friendsList);
         friendsList.appendChild(newFriendItem);
     }
 
@@ -217,12 +219,13 @@ function transferArrElem (currArr, index, destArr) {
 
 
 function transferArrElemDND (currZoneArr, destZoneArr, dragNode) {
-
+    // console.log("id днд элемента:", dragNode.id);
+    // console.log("id эл-та текущ списка друзей:", currZoneArr[0].id);
     for (let i = 0; i < currZoneArr.length; i++) {
-        // console.log("id днд элемента:", dragNode.id);
-        // console.log("id эл-та текущ списка друзей:", currZoneArr[i].id);
-        if (currZoneArr[i].id === dragNode.id) {
-            // console.log("совпало", dragNode.id);
+        console.log("id днд элемента:", dragNode.id);
+        console.log("id эл-та текущ списка друзей:", currZoneArr[i].id);
+        if (currZoneArr[i].id == dragNode.id) { // типа одно строка, другое - число?? как правильно записать??
+            console.log("совпало", dragNode.id, i);
             
             return transferArrElem(currZoneArr, i, destZoneArr);
         }
@@ -240,31 +243,243 @@ function transferArrElemBtn (currZoneArr, destZoneArr, friendId) {
     }
 }
 
+
+
+
+function popupAddListeners() {
+
+    popup.addEventListener("keyup", e => {
+    
+        if (e.target === allFriendsFilterInput) {
+            console.log("ввод в фильтр всех друзей");
+            processInput (allFriendsFilterInput, allFriendsList, allFriendsArr);
+        } else {
+            console.log("ввод в фильтр выбранных друзей");
+            processInput (choosenFriendsFilterInput, choosenFriendsList, choosenFriendsArr);
+        }
+    })
+
+    document.addEventListener('dragstart', (e) => {
+        const zone = getCurrentZone(e.target);
+
+        if (zone) {
+            currentDrag = {startZone: zone, node: e.target};
+        }
+    });
+
+    document.addEventListener('dragover', (e) => {
+        const zone = getCurrentZone(e.target);
+
+        if (zone) {
+            e.preventDefault();
+        }
+    });
+
+    document.addEventListener('drop', (e) => {
+        if (currentDrag) {
+            const zone = getCurrentZone(e.target);
+            // console.log("!");
+
+            e.preventDefault();
+
+            if (zone && currentDrag.startZone !== zone) {
+                // console.log("!!");
+                zone.appendChild(currentDrag.node);
+
+
+                if (zone == choosenFriendsList) {
+                    console.log("зона дропа - выбранные друзья: убираем из оновных, добавляем в избранные");
+                    transferArrElemDND (allFriendsArr, choosenFriendsArr, currentDrag.node);
+                    console.log("Теперь избранные:", choosenFriendsArr);
+                    console.log("Теперь основные:", allFriendsArr);
+
+                    processInput (choosenFriendsFilterInput, choosenFriendsList, choosenFriendsArr);
+
+                    if (choosenFriendsFilterInput.value) {
+                        alert("Активен фильтр: друзья будут перенесены, но не будут отображены, если не соответствуют фильтру");
+                    }
+
+                } else {
+                    console.log("зона дропа - все друзья: убираем из избранных, добавляем в основные");
+                    transferArrElemDND (choosenFriendsArr, allFriendsArr, currentDrag.node)
+                    console.log("Теперь избранные:", choosenFriendsArr);
+                    console.log("Теперь основные:", allFriendsArr);
+
+                    processInput (allFriendsFilterInput, allFriendsList, allFriendsArr);
+
+                    if (allFriendsFilterInput.value) {
+                        alert("Активен фильтр: друзья будут перенесены, но не будут отображены, если не соответствуют фильтру");
+                    }
+
+                }
+                
+            }
+            currentDrag = null;
+        }
+    });
+}
+
+function popupAddButtons() {
+    
+    saveBtn.addEventListener("click", () => {
+        storage.allFriendsArr = JSON.stringify(allFriendsArr);
+        storage.choosenFriendsArr = JSON.stringify(choosenFriendsArr);
+        alert("сохранено");
+    })
+    
+    closePopup.addEventListener("click", () => {
+        popup.style.display = "none";
+    })
+}
+
+function processFriendsAndOpenPopup() {
+
+    processInput (allFriendsFilterInput, allFriendsList, allFriendsArr);
+    processInput (choosenFriendsFilterInput, choosenFriendsList, choosenFriendsArr);
+    popup.style.display = "flex";
+
+    popupAddListeners();
+    popupAddButtons();
+
+}
+
 //////////////////////////////////// 
 
-// if (storage.allFriendsArr || storage.choosenFriendsArr) {
-//     allFriendsArr = JSON.parse(storage.allFriendsArr);
-//     choosenFriendsArr = JSON.parse(storage.choosenFriendsArr);
-// } else {
-//     allFriendsArr = testData;
-// }
+// 
 
 
 
 openPopup.addEventListener("click", () => {
+
+    if (storage.allFriendsArr || storage.choosenFriendsArr) {
+        allFriendsArr = JSON.parse(storage.allFriendsArr);
+        choosenFriendsArr = JSON.parse(storage.choosenFriendsArr);
+        // storage.clear();
+
+        processFriendsAndOpenPopup();
+
+    } else {
+        VK.init({
+            apiId: 6498323
+        });
     
-    authVK()
-        .then(() => {
-            console.log("авторизация: успешно");
-            return callAPI("friends.get", {fields: "name, lastName, photo_100"}) // вернет data.response
-        })
-        .then(friends => {
-            console.log("загрузка друзей: успешно");
-            console.log("friends");
-//             
-        })
+        authVK()
+            .then(() => {
+                console.log("авторизация: успешно");
+                return callAPI("friends.get", {fields: "name, lastName, photo_100"}) // вернет data.response
+            })
+            .then(friends => {
+                console.log("загрузка друзей: успешно");
+                console.log(friends);
+                console.log(friends.items);
+
+                allFriendsArr = friends.items;
+                console.log(allFriendsArr[0]);
+                console.log(allFriendsArr[0].id);
+
+                processFriendsAndOpenPopup();
+                
+                
+            })
+    
     }
-)
+})
+
+
+
+
+//             openPopup.addEventListener("click", () => {
+
+//                 processInput (allFriendsFilterInput, allFriendsList, allFriendsArr);
+//                 processInput (choosenFriendsFilterInput, choosenFriendsList, choosenFriendsArr);
+//                 popup.style.display = "flex";
+                
+//                 popup.addEventListener("keyup", e => {
+            
+//                     if (e.target === allFriendsFilterInput) {
+//                         console.log("ввод в фильтр всех друзей");
+//                         processInput (allFriendsFilterInput, allFriendsList, allFriendsArr);
+//                     } else {
+//                         console.log("ввод в фильтр выбранных друзей");
+//                         processInput (choosenFriendsFilterInput, choosenFriendsList, choosenFriendsArr);
+//                     }
+//                 })
+            
+//                 document.addEventListener('dragstart', (e) => {
+//                     const zone = getCurrentZone(e.target);
+            
+//                     if (zone) {
+//                         currentDrag = {startZone: zone, node: e.target};
+//                     }
+//                 });
+            
+//                 document.addEventListener('dragover', (e) => {
+//                     const zone = getCurrentZone(e.target);
+            
+//                     if (zone) {
+//                         e.preventDefault();
+//                     }
+//                 });
+            
+//                 document.addEventListener('drop', (e) => {
+//                     if (currentDrag) {
+//                         const zone = getCurrentZone(e.target);
+            
+//                         e.preventDefault();
+            
+//                         if (zone && currentDrag.startZone !== zone) {
+            
+//                             zone.appendChild(currentDrag.node);
+            
+            
+//                             if (zone == choosenFriendsList) {
+//                                 console.log("зона дропа - выбранные друзья: убираем из оновных, добавляем в избранные");
+//                                 transferArrElemDND (allFriendsArr, choosenFriendsArr, currentDrag.node)
+//                                 console.log("Теперь избранные:", choosenFriendsArr);
+//                                 console.log("Теперь основные:", allFriendsArr);
+            
+//                                 processInput (choosenFriendsFilterInput, choosenFriendsList, choosenFriendsArr);
+            
+//                                 if (choosenFriendsFilterInput.value) {
+//                                     alert("Активен фильтр: друзья будут перенесены, но не будут отображены, если не соответствуют фильтру");
+//                                 }
+            
+//                             } else {
+//                                 console.log("зона дропа - все друзья: убираем из избранных, добавляем в основные");
+//                                 transferArrElemDND (choosenFriendsArr, allFriendsArr, currentDrag.node)
+//                                 console.log("Теперь избранные:", choosenFriendsArr);
+//                                 console.log("Теперь основные:", allFriendsArr);
+            
+//                                 processInput (allFriendsFilterInput, allFriendsList, allFriendsArr);
+            
+//                                 if (allFriendsFilterInput.value) {
+//                                     alert("Активен фильтр: друзья будут перенесены, но не будут отображены, если не соответствуют фильтру");
+//                                 }
+            
+//                             }
+                            
+//                         }
+//                         currentDrag = null;
+//                     }
+//                 });
+            
+            
+//                 saveBtn.addEventListener("click", () => {
+//                     storage.allFriendsArr = JSON.stringify(allFriendsArr);
+//                     storage.choosenFriendsArr = JSON.stringify(choosenFriendsArr);
+//                     alert("сохранено");
+//                 })
+                
+            
+//                 closePopup.addEventListener("click", () => {
+//                     popup.style.display = "none";
+//                 })
+            
+            
+//             })
+//         })
+//     }
+// )
 
 // openPopup.addEventListener("click", () => {
 
